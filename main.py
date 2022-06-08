@@ -199,8 +199,8 @@ if __name__ == '__main__':
             block.log('Parallelizing')
             model_and_loss = nn.parallel.DataParallel(model_and_loss, device_ids=list(range(args.number_gpus)))
             print("Parameters:")
-            for p in model_and_loss.parameters():
-                print(p.name, p.requires_grad)
+            for name, param in model_and_loss.named_parameters():
+                print(name, param.requires_grad)
             torch.cuda.manual_seed(args.seed) 
 
         else:
