@@ -200,7 +200,10 @@ if __name__ == '__main__':
             model_and_loss = nn.parallel.DataParallel(model_and_loss, device_ids=list(range(args.number_gpus)))
             print("Parameters:")
             for name, param in model_and_loss.named_parameters():
+                if name != "module.model.flownetfusion.predict_flow0.weight" and name != "module.model.flownetfusion.predict_flow0.bias":
+                    param.requires_grad = False
                 print(name, param.requires_grad)
+            
             torch.cuda.manual_seed(args.seed) 
 
         else:
